@@ -38,9 +38,10 @@ SELECT
 FROM adherence_calc
 GROUP BY 1
 ORDER BY Adherence_Rate_Pct DESC;
+```
 2. Operational Efficiency (Average Length of Stay)
 Identifying which admission types (Emergency vs. Elective) occupy beds the longest.
-```
+
 SQL
 ```
 SELECT 
