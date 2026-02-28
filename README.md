@@ -24,20 +24,26 @@ SQL
 WITH adherence_calc AS (
   SELECT 
     CASE 
-      WHEN Medication LIKE '%Paracetamol%' THEN 'Pain Relief'
-      WHEN Medication LIKE '%Amoxicillin%' THEN 'Antibiotic'
+      WHEN Medication IN ('Paracetamol', 'Ibuprofen', 'Aspirin') THEN 'Pain Relief'
+      WHEN Medication = 'Penicillin' THEN 'Antibiotic'
+      WHEN Medication = 'Lipitor' THEN 'Cardiovascular'
       ELSE 'Other'
     END AS Drug_Class,
-    CASE WHEN (julianday(Discharge_Date) - julianday(Date_of_Admission)) >= 28 THEN 1 ELSE 0 END AS Adherent_Flag
+    (
+      -- Convert DD-MM-YYYY to YYYY-MM-DD
+      julianday(substr("Discharge Date", 7, 4) || '-' || substr("Discharge Date", 4, 2) || '-' || substr("Discharge Date", 1, 2)) - 
+      julianday(substr("Date of Admission", 7, 4) || '-' || substr("Date of Admission", 4, 2) || '-' || substr("Date of Admission", 1, 2))
+    ) AS Treatment_Days
   FROM hospital_data
 )
 SELECT 
   Drug_Class,
   COUNT(*) AS Total_Prescriptions,
-  ROUND(AVG(Adherent_Flag)*100, 1) AS Adherence_Rate_Pct
+  ROUND(AVG(CASE WHEN Treatment_Days >= 28 THEN 1.0 ELSE 0.0 END) * 100, 2) AS Adherence_Rate_Pct
 FROM adherence_calc
-GROUP BY 1
+GROUP BY Drug_Class
 ORDER BY Adherence_Rate_Pct DESC;
+
 ```
 2. Operational Efficiency (Average Length of Stay)
 Identifying which admission types (Emergency vs. Elective) occupy beds the longest.
@@ -45,10 +51,17 @@ Identifying which admission types (Emergency vs. Elective) occupy beds the longe
 SQL
 ```
 SELECT 
-    Admission_Type, 
-    ROUND(AVG(julianday(Discharge_Date) - julianday(Date_of_Admission)), 2) AS Avg_Stay_Days
+    "Admission Type", 
+    COUNT(*) AS Total_Admissions,
+    ROUND(AVG(
+        -- Convert DD-MM-YYYY to YYYY-MM-DD
+        julianday(substr("Discharge Date", 7, 4) || '-' || substr("Discharge Date", 4, 2) || '-' || substr("Discharge Date", 1, 2)) - 
+        julianday(substr("Date of Admission", 7, 4) || '-' || substr("Date of Admission", 4, 2) || '-' || substr("Date of Admission", 1, 2))
+    ), 2) AS Avg_Stay_Days
 FROM hospital_data
-GROUP BY Admission_Type;
+GROUP BY "Admission Type"
+ORDER BY Avg_Stay_Days DESC;
+
 ```
 📊 Visualizations
 I used the cleaned SQLite data to build a Power BI dashboard focusing on:
