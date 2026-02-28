@@ -1,22 +1,22 @@
-🏥 Hospital Operations & Medication Adherence Analysis
+🏥 Hospital Operations & Medication Adherence Analysis <br>
 Tooling: SQLite, DB Browser, Power BI (Visualizations)
 
-Dataset: Healthcare Dataset (Kaggle)
+Dataset: Healthcare Dataset (Kaggle) <br>
 
 📌 Project Overview
 This project evaluates hospital performance and patient outcomes by analyzing medication adherence and operational efficiency. I transformed raw, inconsistently formatted healthcare data into a dynamic dashboard that allows stakeholders to track patient recovery times, billing trends, and drug compliance across various medical conditions.
 
 🛠️ Data Cleaning & ETL
-To prepare the data for visualization, I performed the following steps in Power Query and SQLite:
+To prepare the data for visualization, I performed the following steps in Power Query and SQLite: <br>
 
-**Name Normalization**: Fixed inconsistent casing (e.g., "andrEw waTtS" → "Andrew Watts") using Capitalize Each Word transformations.
-**Temporal Logic**: Reformatted DD-MM-YYYY date strings into standard ISO formats to calculate Length of Stay.
-**Drug Classification**: Grouped individual medications into clinical categories (Pain Relief, Antibiotics, Cardiovascular) using conditional logic.
+**Name Normalization**: Fixed inconsistent casing (e.g., "andrEw waTtS" → "Andrew Watts") using Capitalize Each Word transformations. <br>
+**Temporal Logic**: Reformatted DD-MM-YYYY date strings into standard ISO formats to calculate Length of Stay. <br>
+**Drug Classification**: Grouped individual medications into clinical categories (Pain Relief, Antibiotics, Cardiovascular) using conditional logic. <br>
 
 🔍 Key SQL Queries
-I used SQLite to extract key metrics before building the dashboard.
-1. Medication Adherence Rate
-Calculates the percentage of patients staying on their medication for a minimum effective period (28 days).
+I used SQLite to extract key metrics before building the dashboard. <br>
+1. Medication Adherence Rate <br>
+Calculates the percentage of patients staying on their medication for a minimum effective period (28 days). <br>
 
 SQL
 ```
@@ -44,8 +44,8 @@ GROUP BY Drug_Class
 ORDER BY Adherence_Rate_Pct DESC;
 
 ```
-2. Operational Efficiency (Average Length of Stay)
-Identifying which admission types (Emergency vs. Elective) occupy beds the longest / experience the longest hospital stays.
+2. Operational Efficiency (Average Length of Stay) <br>
+Identifying which admission types (Emergency vs. Elective) occupy beds the longest / experience the longest hospital stays. <br>
 
 SQL
 ```
@@ -66,12 +66,12 @@ ORDER BY Avg_Stay_Days DESC;
 
 The dashboard consists of three main sections:
 
-**Executive KPIs**: Real-time tracking of Total Patients, Average Billing, and Overall Adherence.
-**Adherence Trends**: A breakdown of which drug classes see the highest patient compliance.
-**Patient Demographics**: A deep dive into medical conditions and test results to identify high-risk groups.
+**Executive KPIs**: Real-time tracking of Total Patients, Average Billing, and Overall Adherence. <br>
+**Adherence Trends**: A breakdown of which drug classes see the highest patient compliance. <br>
+**Patient Demographics**: A deep dive into medical conditions and test results to identify high-risk groups. <br>
 
 💡 Insights & Conclusions
 
-**Compliance Gap**: Cardiovascular medications (Lipitor) show a lower adherence rate than Antibiotics, suggesting a need for better patient follow-up.
-**Billing Patterns**: Patients with Urgent admissions incur 15% higher billing amounts on average than Elective admissions.
-**Data Quality**: By normalizing the "Name" field, I improved the usability of the patient lookup table for administrative staff.
+**Compliance Gap**: Cardiovascular medications (Lipitor) show a lower adherence rate than Antibiotics, suggesting a need for better patient follow-up. <br>
+**Billing Patterns**: Patients with Urgent admissions incur 15% higher billing amounts on average than Elective admissions. <br>
+**Data Quality**: By normalizing the "Name" field, I improved the usability of the patient lookup table for administrative staff. <br>
