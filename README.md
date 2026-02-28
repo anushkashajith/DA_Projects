@@ -64,6 +64,7 @@ ORDER BY Avg_Stay_Days DESC;
 ```
 📊 Power BI Dashboard   
 
+![Project Screenshot](screenshot.png)
 The dashboard consists of three main sections:   
 
 **Executive KPIs**: Real-time tracking of Total Patients, Average Billing, and Overall Adherence.  
