@@ -20,6 +20,7 @@ Classification: Categorized specific medications into broader drug classes (e.g.
 Calculates the percentage of patients staying on their medication for a minimum effective period (28 days).
 
 SQL
+```
 WITH adherence_calc AS (
   SELECT 
     CASE 
@@ -39,14 +40,15 @@ GROUP BY 1
 ORDER BY Adherence_Rate_Pct DESC;
 2. Operational Efficiency (Average Length of Stay)
 Identifying which admission types (Emergency vs. Elective) occupy beds the longest.
-
+```
 SQL
+```
 SELECT 
     Admission_Type, 
     ROUND(AVG(julianday(Discharge_Date) - julianday(Date_of_Admission)), 2) AS Avg_Stay_Days
 FROM hospital_data
 GROUP BY Admission_Type;
-
+```
 📊 Visualizations
 I used the cleaned SQLite data to build a Power BI dashboard focusing on:
 
